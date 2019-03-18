@@ -1,14 +1,11 @@
 package rs.example.pokemonpettingapp;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class MainActivityFragment extends Fragment {
     private PetView petView; // handles touch events and draws
@@ -24,6 +22,9 @@ public class MainActivityFragment extends Fragment {
     private float currentAcceleration;
     private float lastAcceleration;
     private boolean dialogOnScreen = false;
+    private boolean spriteMode = true; //true = color, false = greyscale
+    MediaPlayer mediaPlayer = new MediaPlayer();
+    int cry = R.raw.cry001; //change this cry programmatically based on current pokemon
 
     // value used to determine whether user shook the device to erase
     private static final int ACCELERATION_THRESHOLD = 100000;
@@ -114,12 +115,10 @@ public class MainActivityFragment extends Fragment {
                         acceleration = currentAcceleration *
                                 (currentAcceleration - lastAcceleration);
 
-                        // if the acceleration is above a certain threshold
+                        // if the acceleration is above a certain threshold play the current pokemon cry
                         if (acceleration > ACCELERATION_THRESHOLD) {
-                            //TODO: add pokemon cry sound
-                            //the sounds that aren't in a folder are remastered cries that appear in new games
-                            //the sounds in the 'old' folder are classic cries
-                            //either one could be used here
+                            mediaPlayer.create(getContext(), cry);
+                            mediaPlayer.start();
                         }
                     }
                 }
@@ -141,16 +140,24 @@ public class MainActivityFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // switch based on the MenuItem id
         switch (item.getItemId()) {
+            case R.id.sprite:
+                //swap sprite mode
+                spriteMode = !spriteMode;
+                //TODO: when pokemon image is implemented change image here
+                if (spriteMode) { //if new mode is color mode {
+                    Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT);
+                } else {
+                    Toast.makeText(getContext(), R.string.toast_grayscale_sprite_toggle, Toast.LENGTH_SHORT);
+                }
+                return true;
+            case R.id.pokemon:
+                PokemonSelectFragment pokemonFragment = new PokemonSelectFragment();
+                pokemonFragment.show(getFragmentManager(), "pokemon dialog");
+                return true;
             case R.id.color:
                 ColorDialogFragment colorDialog = new ColorDialogFragment();
                 colorDialog.show(getFragmentManager(), "color dialog");
                 return true; // consume the menu event
-            case R.id.pokemon:
-                //TODO: add pokemon switching functionality
-                return true;
-            case R.id.sprite:
-                //TODO: add sprite changing functionality
-                return true;
         }
 
         return super.onOptionsItemSelected(item);

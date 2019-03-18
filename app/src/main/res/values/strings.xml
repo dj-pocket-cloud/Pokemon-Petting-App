@@ -10,7 +10,9 @@
     <string name="menuitem_pokemon">Change Pokemon</string>
     <string name="menuitem_color">Change Color</string>
     <string name="button_set_color">Set Color And Width</string>
+    <string name="button_set_pokemon">Set Pokemon</string>
     <string name="title_color_dialog">Choose Color and Line Width</string>
+    <string name="title_pokemon_dialog">Choose Pokemon</string>
     <string name="toast_pokemon_change">Pokemon changed to </string> <!--append pokemon name to end in code-->
     <string name="toast_grayscale_sprite_toggle">Sprite mode toggled to original Game Boy colors</string>
     <string name="toast_color_sprite_toggle">Sprite mode toggled to Game Boy Color colors</string>

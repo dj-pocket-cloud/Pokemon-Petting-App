@@ -17,6 +17,7 @@ public class ColorDialogFragment extends DialogFragment {
     private SeekBar redSeekBar;
     private SeekBar greenSeekBar;
     private SeekBar blueSeekBar;
+    private SeekBar widthSeekBar;
     private View colorView;
     private int color;
 
@@ -42,6 +43,8 @@ public class ColorDialogFragment extends DialogFragment {
                 R.id.greenSeekBar);
         blueSeekBar = (SeekBar) colorDialogView.findViewById(
                 R.id.blueSeekBar);
+        widthSeekBar = (SeekBar) colorDialogView.findViewById(
+                R.id.widthSeekBar);
         colorView = colorDialogView.findViewById(R.id.colorView);
 
         // register SeekBar event listeners
@@ -51,7 +54,7 @@ public class ColorDialogFragment extends DialogFragment {
         blueSeekBar.setOnSeekBarChangeListener(colorChangedListener);
 
         // use current drawing color to set SeekBar values
-        final PetView petView = getDoodleFragment().getPetView();
+        final PetView petView = getPetViewFragment().getPetView();
         color = petView.getShapeColor();
         alphaSeekBar.setProgress(Color.alpha(color));
         redSeekBar.setProgress(Color.red(color));
@@ -71,7 +74,7 @@ public class ColorDialogFragment extends DialogFragment {
     }
 
     // gets a reference to the MainActivityFragment
-    private MainActivityFragment getDoodleFragment() {
+    private MainActivityFragment getPetViewFragment() {
         return (MainActivityFragment) getFragmentManager().findFragmentById(
                 R.id.doodleFragment);
     }
@@ -80,7 +83,7 @@ public class ColorDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        MainActivityFragment fragment = getDoodleFragment();
+        MainActivityFragment fragment = getPetViewFragment();
 
         if (fragment != null)
             fragment.setDialogOnScreen(true);
@@ -90,7 +93,7 @@ public class ColorDialogFragment extends DialogFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        MainActivityFragment fragment = getDoodleFragment();
+        MainActivityFragment fragment = getPetViewFragment();
 
         if (fragment != null)
             fragment.setDialogOnScreen(false);
@@ -104,10 +107,12 @@ public class ColorDialogFragment extends DialogFragment {
                 public void onProgressChanged(SeekBar seekBar, int progress,
                                               boolean fromUser) {
 
-                    if (fromUser) // user, not program, changed SeekBar progress
+                    if (fromUser) { // user, not program, changed SeekBar progress
                         color = Color.argb(alphaSeekBar.getProgress(),
                                 redSeekBar.getProgress(), greenSeekBar.getProgress(),
                                 blueSeekBar.getProgress());
+                        //TODO: set line width based on its seekbar progress here
+                    }
                     colorView.setBackgroundColor(color);
                 }
 
