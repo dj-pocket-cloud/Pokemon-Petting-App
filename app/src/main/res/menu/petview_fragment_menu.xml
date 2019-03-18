@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/sprite"
-        android:title="Sprite Mode"
+        android:title="@string/menuitem_sprite"
         android:icon="@drawable/ic_videogame_asset_black_24dp"
         app:showAsAction="ifRoom">
     </item>
 
     <item
         android:id="@+id/pokemon"
-        android:title="Pokemon Selection"
+        android:title="@string/menuitem_pokemon"
         android:icon="@drawable/ic_tag_faces_black_24dp"
         app:showAsAction="ifRoom">
     </item>
 
     <item
         android:id="@+id/color"
-        android:title="Color Selection"
+        android:title="@string/menuitem_color"
         android:icon="@drawable/ic_palette_black_24dp"
         app:showAsAction="ifRoom">
     </item>
