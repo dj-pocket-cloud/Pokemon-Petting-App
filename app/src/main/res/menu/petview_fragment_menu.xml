@@ -4,18 +4,21 @@
     <item
         android:id="@+id/sprite"
         android:title="Sprite Mode"
+        android:icon="@drawable/ic_videogame_asset_black_24dp"
         app:showAsAction="ifRoom">
     </item>
 
     <item
         android:id="@+id/pokemon"
         android:title="Pokemon Selection"
+        android:icon="@drawable/ic_tag_faces_black_24dp"
         app:showAsAction="ifRoom">
     </item>
 
     <item
         android:id="@+id/color"
         android:title="Color Selection"
+        android:icon="@drawable/ic_palette_black_24dp"
         app:showAsAction="ifRoom">
     </item>
 </menu>
