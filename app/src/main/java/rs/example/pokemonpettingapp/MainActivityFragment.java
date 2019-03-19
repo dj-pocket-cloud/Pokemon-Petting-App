@@ -44,7 +44,7 @@ public class MainActivityFragment extends Fragment {
         setHasOptionsMenu(true); // this fragment has menu items to display
 
         // get reference to the DoodleView
-        petView = (PetView) view.findViewById(R.id.doodleView);
+        petView = (PetView) view.findViewById(R.id.petView);
 
         // initialize acceleration values
         acceleration = 0.00f;

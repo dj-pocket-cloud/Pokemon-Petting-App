@@ -76,7 +76,7 @@ public class PetView extends View {
         return (int) paintLine.getStrokeWidth();
     }
 
-    /* perform custom drawing when the DoodleView is refreshed on screen
+    // perform custom drawing when the DoodleView is refreshed on screen
     @Override
     protected void onDraw(Canvas canvas) {
         // draw the background screen
@@ -85,7 +85,7 @@ public class PetView extends View {
         // for each path currently being drawn
         for (Integer key : pathMap.keySet())
             canvas.drawPath(pathMap.get(key), paintLine); // draw line
-    }*/
+    }
 
     //TODO figure out implementing changing pokemon
     public void setPokemon(){

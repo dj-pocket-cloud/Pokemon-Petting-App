@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -18,8 +22,9 @@ public class ColorDialogFragment extends DialogFragment {
     private SeekBar greenSeekBar;
     private SeekBar blueSeekBar;
     private SeekBar widthSeekBar;
-    private View colorView;
+    //private View colorView;
     private int color;
+    private ImageView previewView;
 
     // create an AlertDialog and return it
     @Override
@@ -45,7 +50,9 @@ public class ColorDialogFragment extends DialogFragment {
                 R.id.blueSeekBar);
         widthSeekBar = (SeekBar) colorDialogView.findViewById(
                 R.id.widthSeekBar);
-        colorView = colorDialogView.findViewById(R.id.colorView);
+        //colorView = colorDialogView.findViewById(R.id.colorView);
+
+        previewView = (ImageView) colorDialogView.findViewById(R.id.previewView);
 
         // register SeekBar event listeners
         alphaSeekBar.setOnSeekBarChangeListener(colorChangedListener);
@@ -66,8 +73,10 @@ public class ColorDialogFragment extends DialogFragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         petView.setShapeColor(color);
+                        petView.setLineWidth(widthSeekBar.getProgress());
                     }
                 }
+
         );
 
         return builder.create(); // return dialog
@@ -102,6 +111,9 @@ public class ColorDialogFragment extends DialogFragment {
     // OnSeekBarChangeListener for the SeekBars in the color dialog
     private final OnSeekBarChangeListener colorChangedListener =
             new OnSeekBarChangeListener() {
+                final Bitmap bitmap = Bitmap.createBitmap(
+                        400, 100, Bitmap.Config.ARGB_8888);
+                final Canvas canvas = new Canvas(bitmap); // draws into bitmap
                 // display the updated color
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress,
@@ -111,11 +123,24 @@ public class ColorDialogFragment extends DialogFragment {
                         color = Color.argb(alphaSeekBar.getProgress(),
                                 redSeekBar.getProgress(), greenSeekBar.getProgress(),
                                 blueSeekBar.getProgress());
-                        //TODO: set line width based on its seekbar progress here
+
                     }
-                    colorView.setBackgroundColor(color);
+                    //colorView.setBackgroundColor(color);
+                    Paint p = new Paint();
+                    p.setColor(color);
+                    p.setStrokeCap(Paint.Cap.ROUND);
+                    p.setStrokeWidth(10);
+
+                    // erase the bitmap and redraw the line
+                    bitmap.eraseColor(
+                            getResources().getColor(android.R.color.transparent,
+                                    getContext().getTheme()));
+                    canvas.drawLine(30, 50, 370, 50, p);
+                    previewView.setImageBitmap(bitmap);
+
                 }
 
+                //TODO make another listener for line width or integrate it into existing listener
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {} // required
 

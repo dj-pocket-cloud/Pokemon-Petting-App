@@ -3,4 +3,5 @@
     <dimen name="color_view_height">24dp</dimen>
     <dimen name="activity_horizontal_margin">24dp</dimen>
     <dimen name="activity_vertical_margin">24dp</dimen>
+    <dimen name="lineImageViewHeight">50dp</dimen>
 </resources>

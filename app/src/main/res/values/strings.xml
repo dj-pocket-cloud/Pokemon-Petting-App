@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Pokemon Petting App</string>
+    <string name="title_activity_main">MainActivity</string>
     <string name="label_alpha">Alpha</string>
     <string name="label_red">Red</string>
     <string name="label_green">Green</string>
     <string name="label_blue">Blue</string>
     <string name="label_width">Line width</string>
-    <string name="appbar_scrolling_view_behavior">scroll</string>
     <string name="menuitem_sprite">Toggle Sprite Mode</string>
     <string name="menuitem_pokemon">Change Pokemon</string>
     <string name="menuitem_color">Change Color</string>
