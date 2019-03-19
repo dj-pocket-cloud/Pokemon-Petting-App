@@ -24,6 +24,7 @@ public class ColorDialogFragment extends DialogFragment {
     private SeekBar widthSeekBar;
     //private View colorView;
     private int color;
+    private int width;
     private ImageView previewView;
 
     // create an AlertDialog and return it
@@ -59,6 +60,7 @@ public class ColorDialogFragment extends DialogFragment {
         redSeekBar.setOnSeekBarChangeListener(colorChangedListener);
         greenSeekBar.setOnSeekBarChangeListener(colorChangedListener);
         blueSeekBar.setOnSeekBarChangeListener(colorChangedListener);
+        widthSeekBar.setOnSeekBarChangeListener(colorChangedListener);
 
         // use current drawing color to set SeekBar values
         final PetView petView = getPetViewFragment().getPetView();
@@ -67,6 +69,8 @@ public class ColorDialogFragment extends DialogFragment {
         redSeekBar.setProgress(Color.red(color));
         greenSeekBar.setProgress(Color.green(color));
         blueSeekBar.setProgress(Color.blue(color));
+        width = petView.getLineWidth();
+        widthSeekBar.setProgress(width);
 
         // add Set Color Button
         builder.setPositiveButton(R.string.button_set_color,
@@ -123,13 +127,14 @@ public class ColorDialogFragment extends DialogFragment {
                         color = Color.argb(alphaSeekBar.getProgress(),
                                 redSeekBar.getProgress(), greenSeekBar.getProgress(),
                                 blueSeekBar.getProgress());
+                        width = widthSeekBar.getProgress();
 
                     }
                     //colorView.setBackgroundColor(color);
                     Paint p = new Paint();
                     p.setColor(color);
                     p.setStrokeCap(Paint.Cap.ROUND);
-                    p.setStrokeWidth(10);
+                    p.setStrokeWidth(width);
 
                     // erase the bitmap and redraw the line
                     bitmap.eraseColor(

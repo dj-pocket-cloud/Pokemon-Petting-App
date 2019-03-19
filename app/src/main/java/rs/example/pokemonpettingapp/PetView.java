@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class PetView extends View {
     // used to determine whether user moved a finger enough to draw again
@@ -40,9 +41,9 @@ public class PetView extends View {
         // set the initial display settings for the painted line
         paintLine = new Paint();
         paintLine.setAntiAlias(true); // smooth edges of drawn line
-        paintLine.setColor(Color.BLACK); // default color is black
+        paintLine.setColor(Color.argb(135,255, 137, 178)); // default color is black
         paintLine.setStyle(Paint.Style.STROKE); // solid line
-        paintLine.setStrokeWidth(5); // set the default line width
+        paintLine.setStrokeWidth(25); // set the default line width
         paintLine.setStrokeCap(Paint.Cap.ROUND); // rounded line ends
     }
 
@@ -115,6 +116,7 @@ public class PetView extends View {
         else {
             touchMoved(event);
         }
+        //System.out.print("hi");
 
         invalidate(); // redraw
         return true;
@@ -146,6 +148,8 @@ public class PetView extends View {
 
     // called when the user drags along the screen
     private void touchMoved(MotionEvent event) {
+
+
         // for each of the pointers in the given MotionEvent
         for (int i = 0; i < event.getPointerCount(); i++) {
             // get the pointer ID and pointer index
@@ -176,6 +180,18 @@ public class PetView extends View {
                     // store the new coordinates
                     point.x = (int) newX;
                     point.y = (int) newY;
+
+                    /*try {
+                        TimeUnit.MILLISECONDS.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }*/
+
+                    //System.out.print(pathMap.size());
+                    if(pathMap.size()>10){
+                        pathMap.remove(0);
+                    }
+                    //point.negate();
                 }
             }
         }
