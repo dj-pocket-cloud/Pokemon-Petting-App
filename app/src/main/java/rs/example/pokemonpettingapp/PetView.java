@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class PetView extends View {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(),
                 Bitmap.Config.ARGB_8888);
         //bitmapCanvas = new Canvas(bitmap);
-        bitmap.eraseColor(Color.WHITE); // erase the Bitmap with white
+        bitmap.eraseColor(Color.TRANSPARENT); // erase the Bitmap with transparent
     }
 
     // set the color for the shapes and line
