@@ -89,15 +89,6 @@ public class PetView extends View {
             canvas.drawPath(pathMap.get(key), paintLine); // draw line
     }
 
-    //TODO figure out implementing changing pokemon
-    public void setPokemon(){
-
-    }
-    public String getPokemon(){
-        String name = "";
-        return name;
-    }
-
     // handle touch event
     @Override
     public boolean onTouchEvent(MotionEvent event) {

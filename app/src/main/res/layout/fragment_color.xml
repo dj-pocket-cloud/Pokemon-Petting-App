@@ -47,7 +47,7 @@
         android:layout_row="1"
         android:layout_column="1"
         android:layout_gravity="fill_horizontal"
-        android:max="200" />
+        android:max="80" />
 
     <TextView
         android:id="@+id/redTextView"
@@ -119,6 +119,6 @@
         android:layout_row="5"
         android:layout_column="1"
         android:layout_gravity="fill_horizontal"
-        android:max="85" />
+        android:max="20" />
 
 </GridLayout>

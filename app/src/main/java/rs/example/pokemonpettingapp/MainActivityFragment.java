@@ -123,6 +123,7 @@ public class MainActivityFragment extends Fragment {
                         acceleration = currentAcceleration *
                                 (currentAcceleration - lastAcceleration);
 
+                        //TODO: make sure this part of the code works
                         // if the acceleration is above a certain threshold play the current pokemon cry
                         if (acceleration > ACCELERATION_THRESHOLD) {
                             mediaPlayer.create(getContext(), cry);
@@ -152,36 +153,10 @@ public class MainActivityFragment extends Fragment {
                 //swap sprite mode
                 spriteMode = !spriteMode;
 
-                switch (pokeId) {
-                    case 1:
-                        if (spriteMode) pokeImg.setImageResource(R.drawable.aabcolor);
-                        else pokeImg.setImageResource(R.drawable.aabgrey);
-                        break;
-                    case 4:
-                        if (spriteMode) pokeImg.setImageResource(R.drawable.aaecolor);
-                        else pokeImg.setImageResource(R.drawable.aaegrey);
-                        break;
-                    case 7:
-                        if (spriteMode) pokeImg.setImageResource(R.drawable.aahcolor);
-                        else pokeImg.setImageResource(R.drawable.aahgrey);
-                        break;
-                    case 25:
-                        if (spriteMode) pokeImg.setImageResource(R.drawable.abfcolor);
-                        else pokeImg.setImageResource(R.drawable.abfgrey);
-                        break;
-                }
-                if (spriteMode) {
-                    Toast toast = makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM, toast.getXOffset() / 2,
-                            toast.getYOffset() / 2);
-                    toast.show();
-                }
-                else {
-                    Toast toast = makeText(getContext(), R.string.toast_grayscale_sprite_toggle, Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM, toast.getXOffset() / 2,
-                            toast.getYOffset() / 2);
-                    toast.show();
-                }
+                setSprite(pokeId);
+
+                if (spriteMode) Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.pokemon:
                 PokemonSelectFragment pokemonFragment = new PokemonSelectFragment();
@@ -204,5 +179,40 @@ public class MainActivityFragment extends Fragment {
     // indicates whether a dialog is displayed
     public void setDialogOnScreen(boolean visible) {
         dialogOnScreen = visible;
+    }
+
+    //IMPORTANT: ANY time a new id is set, the sprites will change
+    public void setPokeId(int id){
+        pokeId = id;
+        setSprite(pokeId);
+    }
+
+    public int getPokeId() {
+        return pokeId;
+    }
+
+    public void setSprite(int id) {
+        switch (id) {
+            case 1:
+                if (spriteMode) pokeImg.setImageResource(R.drawable.aabcolor);
+                else pokeImg.setImageResource(R.drawable.aabgrey);
+                cry = R.raw.cry001;
+                break;
+            case 4:
+                if (spriteMode) pokeImg.setImageResource(R.drawable.aaecolor);
+                else pokeImg.setImageResource(R.drawable.aaegrey);
+                cry = R.raw.cry004;
+                break;
+            case 7:
+                if (spriteMode) pokeImg.setImageResource(R.drawable.aahcolor);
+                else pokeImg.setImageResource(R.drawable.aahgrey);
+                cry = R.raw.cry007;
+                break;
+            case 25:
+                if (spriteMode) pokeImg.setImageResource(R.drawable.abfcolor);
+                else pokeImg.setImageResource(R.drawable.abfgrey);
+                cry = R.raw.cry025;
+                break;
+        }
     }
 }
