@@ -57,11 +57,6 @@ public class MainActivityFragment extends Fragment {
 
         setHasOptionsMenu(true); // this fragment has menu items to display
 
-        // load the shake animation that's used for animating the pokemon
-        shakeAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.pokemon_jump);
-        shakeAnimation.setRepeatCount(3); // animation repeats 3 times
-
-
         // get reference to the DoodleView
         petView = (PetView) view.findViewById(R.id.petView);
 
@@ -180,7 +175,6 @@ public class MainActivityFragment extends Fragment {
                 else {
                     petFrame.setBackgroundResource(R.drawable.pokebackgroundgrey);
                     Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
-                    animatePokemon();
                 }
                 return true;
             case R.id.pokemon:
@@ -210,10 +204,6 @@ public class MainActivityFragment extends Fragment {
     public void setPokeId(int id){
         pokeId = id;
         setSprite(pokeId);
-    }
-
-    public void animatePokemon(){
-        pokeImg.startAnimation(shakeAnimation);
     }
 
     public int getPokeId() {

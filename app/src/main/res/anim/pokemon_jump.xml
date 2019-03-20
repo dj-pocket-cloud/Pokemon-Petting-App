@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android" android:interpolator="@android:anim/decelerate_interpolator">
-    <translate android:duration="15" android:fromYDelta="0" android:toYDelta="-1%p" />
-    <translate android:duration="100" android:fromYDelta="-1%p" android:toYDelta="5%p" android:startOffset="15"/>
-    <translate android:duration="100" android:fromYDelta="5%p" android:toYDelta="0%p" android:startOffset="115" />
+    <translate android:duration="20" android:fromYDelta="10%p" android:toYDelta="10%p" />
+    <translate android:duration="220" android:fromYDelta="3%p" android:toYDelta="-10%p" android:startOffset="20"/>
+    <translate android:duration="200" android:fromYDelta="-10%p" android:toYDelta="0%p" android:startOffset="240" />
 </set>
