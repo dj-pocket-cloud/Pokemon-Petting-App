@@ -8,13 +8,17 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import static android.widget.Toast.*;
 
 public class MainActivityFragment extends Fragment {
     private PetView petView; // handles touch events and draws
@@ -22,9 +26,11 @@ public class MainActivityFragment extends Fragment {
     private float currentAcceleration;
     private float lastAcceleration;
     private boolean dialogOnScreen = false;
+    private int pokeId = 25; //corresponds to pokedex number
     private boolean spriteMode = true; //true = color, false = greyscale
     MediaPlayer mediaPlayer = new MediaPlayer();
     int cry = R.raw.cry001; //change this cry programmatically based on current pokemon
+    ImageView pokeImg;
 
     // value used to determine whether user shook the device to erase
     private static final int ACCELERATION_THRESHOLD = 100000;
@@ -45,6 +51,8 @@ public class MainActivityFragment extends Fragment {
 
         // get reference to the DoodleView
         petView = (PetView) view.findViewById(R.id.petView);
+
+        pokeImg = (ImageView) view.findViewById(R.id.pokeImageView);
 
         // initialize acceleration values
         acceleration = 0.00f;
@@ -143,11 +151,36 @@ public class MainActivityFragment extends Fragment {
             case R.id.sprite:
                 //swap sprite mode
                 spriteMode = !spriteMode;
-                //TODO: when pokemon image is implemented change image here
-                if (spriteMode) { //if new mode is color mode {
-                    Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT);
-                } else {
-                    Toast.makeText(getContext(), R.string.toast_grayscale_sprite_toggle, Toast.LENGTH_SHORT);
+
+                switch (pokeId) {
+                    case 1:
+                        if (spriteMode) pokeImg.setImageResource(R.drawable.aabcolor);
+                        else pokeImg.setImageResource(R.drawable.aabgrey);
+                        break;
+                    case 4:
+                        if (spriteMode) pokeImg.setImageResource(R.drawable.aaecolor);
+                        else pokeImg.setImageResource(R.drawable.aaegrey);
+                        break;
+                    case 7:
+                        if (spriteMode) pokeImg.setImageResource(R.drawable.aahcolor);
+                        else pokeImg.setImageResource(R.drawable.aahgrey);
+                        break;
+                    case 25:
+                        if (spriteMode) pokeImg.setImageResource(R.drawable.abfcolor);
+                        else pokeImg.setImageResource(R.drawable.abfgrey);
+                        break;
+                }
+                if (spriteMode) {
+                    Toast toast = makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM, toast.getXOffset() / 2,
+                            toast.getYOffset() / 2);
+                    toast.show();
+                }
+                else {
+                    Toast toast = makeText(getContext(), R.string.toast_grayscale_sprite_toggle, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM, toast.getXOffset() / 2,
+                            toast.getYOffset() / 2);
+                    toast.show();
                 }
                 return true;
             case R.id.pokemon:
