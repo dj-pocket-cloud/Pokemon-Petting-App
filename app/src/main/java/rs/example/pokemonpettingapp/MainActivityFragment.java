@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class MainActivityFragment extends Fragment {
     MediaPlayer mediaPlayer = new MediaPlayer();
     int cry = R.raw.cry001; //change this cry programmatically based on current pokemon
     ImageView pokeImg;
+    FrameLayout frameLayout;
 
     // value used to determine whether user shook the device to erase
     private static final int ACCELERATION_THRESHOLD = 100000;
@@ -53,6 +55,7 @@ public class MainActivityFragment extends Fragment {
         petView = (PetView) view.findViewById(R.id.petView);
 
         pokeImg = (ImageView) view.findViewById(R.id.pokeImageView);
+        frameLayout = (FrameLayout) view.findViewById(R.id.frame);
 
         // initialize acceleration values
         acceleration = 0.00f;
@@ -152,11 +155,15 @@ public class MainActivityFragment extends Fragment {
             case R.id.sprite:
                 //swap sprite mode
                 spriteMode = !spriteMode;
-
                 setSprite(pokeId);
-
-                if (spriteMode) Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
-                else Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
+                if (spriteMode) {
+                    frameLayout.setBackgroundResource(R.drawable.pokebackground);
+                    Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    frameLayout.setBackgroundResource(R.drawable.pokebackgroundgrey);
+                    Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.pokemon:
                 PokemonSelectFragment pokemonFragment = new PokemonSelectFragment();

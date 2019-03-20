@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:layout_height="wrap_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame"
     android:layout_width="wrap_content"
-    android:background="@drawable/pokebackground"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content"
+    android:background="@drawable/pokebackground">
 
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pokeImageView"
