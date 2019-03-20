@@ -7,12 +7,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.provider.MediaStore;
-import android.support.v4.print.PrintHelper;
+import android.support.v4.app.DialogFragment;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class PetView extends View {
                 Bitmap.Config.ARGB_8888);
         //bitmapCanvas = new Canvas(bitmap);
         bitmap.eraseColor(Color.TRANSPARENT); // erase the Bitmap with transparent
+
     }
 
     // set the color for the shapes and line
@@ -192,6 +194,10 @@ public class PetView extends View {
     private void touchEnded(int lineID) {
         Path path = pathMap.get(lineID); // get the corresponding Path
         //bitmapCanvas.drawPath(path, paintLine); // draw to bitmapCanvas
+        Animation shakeAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.pokemon_jump);
+        shakeAnimation.setRepeatCount(3); // animation repeats 3 times
+        ImageView pokeView = (ImageView) getRootView().findViewById(R.id.pokeImageView);
+        pokeView.startAnimation(shakeAnimation);
         path.reset(); // reset the Path
     }
 }

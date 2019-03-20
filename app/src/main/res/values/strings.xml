@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Pokemon Petting App</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Pokemon Petting App</string>
     <string name="label_alpha">Alpha</string>
     <string name="label_red">Red</string>
     <string name="label_green">Green</string>

@@ -1,5 +1,7 @@
 package rs.example.pokemonpettingapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -14,10 +16,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import static android.widget.Toast.*;
 
@@ -29,10 +34,11 @@ public class MainActivityFragment extends Fragment {
     private boolean dialogOnScreen = false;
     private int pokeId = 25; //corresponds to pokedex number
     private boolean spriteMode = true; //true = color, false = greyscale
+    private Animation shakeAnimation;
+    FrameLayout petFrame;
     MediaPlayer mediaPlayer = new MediaPlayer();
     int cry = R.raw.cry001; //change this cry programmatically based on current pokemon
     ImageView pokeImg;
-    FrameLayout frameLayout;
 
     // value used to determine whether user shook the device to erase
     private static final int ACCELERATION_THRESHOLD = 100000;
@@ -51,18 +57,29 @@ public class MainActivityFragment extends Fragment {
 
         setHasOptionsMenu(true); // this fragment has menu items to display
 
+        // load the shake animation that's used for animating the pokemon
+        shakeAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.pokemon_jump);
+        shakeAnimation.setRepeatCount(3); // animation repeats 3 times
+
+
         // get reference to the DoodleView
         petView = (PetView) view.findViewById(R.id.petView);
 
         pokeImg = (ImageView) view.findViewById(R.id.pokeImageView);
-        frameLayout = (FrameLayout) view.findViewById(R.id.frame);
+
+        petFrame = (FrameLayout) view.findViewById(R.id.petFrame);
 
         // initialize acceleration values
         acceleration = 0.00f;
         currentAcceleration = SensorManager.GRAVITY_EARTH;
         lastAcceleration = SensorManager.GRAVITY_EARTH;
+
+        //pokeImg.startAnimation(shakeAnimation);
+
         return view;
     }
+
+
 
     // start listening for sensor events
     @Override
@@ -157,12 +174,13 @@ public class MainActivityFragment extends Fragment {
                 spriteMode = !spriteMode;
                 setSprite(pokeId);
                 if (spriteMode) {
-                    frameLayout.setBackgroundResource(R.drawable.pokebackground);
+                    petFrame.setBackgroundResource(R.drawable.pokebackground);
                     Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    frameLayout.setBackgroundResource(R.drawable.pokebackgroundgrey);
+                    petFrame.setBackgroundResource(R.drawable.pokebackgroundgrey);
                     Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
+                    animatePokemon();
                 }
                 return true;
             case R.id.pokemon:
@@ -192,6 +210,10 @@ public class MainActivityFragment extends Fragment {
     public void setPokeId(int id){
         pokeId = id;
         setSprite(pokeId);
+    }
+
+    public void animatePokemon(){
+        pokeImg.startAnimation(shakeAnimation);
     }
 
     public int getPokeId() {
