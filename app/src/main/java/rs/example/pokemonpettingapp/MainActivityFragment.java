@@ -174,7 +174,7 @@ public class MainActivityFragment extends Fragment {
                 }
                 else {
                     petFrame.setBackgroundResource(R.drawable.pokebackgroundgrey);
-                    Toast.makeText(getContext(), R.string.toast_color_sprite_toggle, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toast_grayscale_sprite_toggle, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.pokemon:
