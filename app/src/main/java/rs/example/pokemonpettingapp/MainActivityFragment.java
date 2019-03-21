@@ -1,11 +1,5 @@
 package rs.example.pokemonpettingapp;
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,24 +16,15 @@ import android.view.animation.Animation;
 
 public class MainActivityFragment extends Fragment {
     private PetView petView; // handles touch events and draws
-    private float acceleration;
-    private float currentAcceleration;
-    private float lastAcceleration;
     private boolean dialogOnScreen = false;
     private int pokeId = 25; //corresponds to pokedex number
     private boolean spriteMode = true; //true = color, false = greyscale
     private Animation shakeAnimation;
     FrameLayout petFrame;
-    MediaPlayer mediaPlayer = new MediaPlayer();
     int cry = R.raw.cry001; //change this cry programmatically based on current pokemon
     ImageView pokeImg;
 
-    // value used to determine whether user shook the device to erase
-    private static final int ACCELERATION_THRESHOLD = 100000;
 
-    // used to identify the request for using external storage, which
-    // the save image feature needs
-    private static final int SAVE_IMAGE_PERMISSION_REQUEST_CODE = 1;
 
     // called when Fragment's view needs to be created
     @Override
@@ -58,10 +43,6 @@ public class MainActivityFragment extends Fragment {
 
         petFrame = (FrameLayout) view.findViewById(R.id.petFrame);
 
-        // initialize acceleration values
-        acceleration = 0.00f;
-        currentAcceleration = SensorManager.GRAVITY_EARTH;
-        lastAcceleration = SensorManager.GRAVITY_EARTH;
 
         //pokeImg.startAnimation(shakeAnimation);
 
@@ -91,9 +72,6 @@ public class MainActivityFragment extends Fragment {
                 else {
                     petFrame.setBackgroundResource(R.drawable.pokebackgroundgrey);
                     Toast.makeText(getContext(), R.string.toast_grayscale_sprite_toggle, Toast.LENGTH_SHORT).show();
-                    mediaPlayer.create(getContext(), cry);
-
-                    mediaPlayer.start();
                 }
                 return true;
             case R.id.pokemon:
