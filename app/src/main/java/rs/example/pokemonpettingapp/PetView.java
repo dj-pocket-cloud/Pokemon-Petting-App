@@ -7,26 +7,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.support.v4.app.DialogFragment;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class PetView extends View {
     // used to determine whether user moved a finger enough to draw again
     private static final float TOUCH_TOLERANCE = 10;
 
     private Bitmap bitmap; // drawing area for displaying or saving
-    //private Canvas bitmapCanvas; // used to to draw on the bitmap
     private final Paint paintScreen; // used to draw bitmap onto screen
     private final Paint paintLine; // used to draw lines onto bitmap
 
@@ -55,7 +50,6 @@ public class PetView extends View {
     public void onSizeChanged(int w, int h, int oldW, int oldH) {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(),
                 Bitmap.Config.ARGB_8888);
-        //bitmapCanvas = new Canvas(bitmap);
         bitmap.eraseColor(Color.TRANSPARENT); // erase the Bitmap with transparent
 
     }
@@ -109,7 +103,6 @@ public class PetView extends View {
         else {
             touchMoved(event);
         }
-        //System.out.print("hi");
 
         invalidate(); // redraw
         return true;
@@ -174,17 +167,6 @@ public class PetView extends View {
                     point.x = (int) newX;
                     point.y = (int) newY;
 
-                    /*try {
-                        TimeUnit.MILLISECONDS.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }*/
-
-                    //System.out.print(pathMap.size());
-                    if(pathMap.size()>10){
-                        pathMap.remove(0);
-                    }
-                    //point.negate();
                 }
             }
         }
@@ -193,7 +175,6 @@ public class PetView extends View {
     // called when the user finishes a touch
     private void touchEnded(int lineID) {
         Path path = pathMap.get(lineID); // get the corresponding Path
-        //bitmapCanvas.drawPath(path, paintLine); // draw to bitmapCanvas
         Animation shakeAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.pokemon_jump);
         shakeAnimation.setRepeatCount(3); // animation repeats 3 times
         ImageView pokeView = (ImageView) getRootView().findViewById(R.id.pokeImageView);

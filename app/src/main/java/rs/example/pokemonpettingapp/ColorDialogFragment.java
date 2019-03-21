@@ -22,7 +22,6 @@ public class ColorDialogFragment extends DialogFragment {
     private SeekBar greenSeekBar;
     private SeekBar blueSeekBar;
     private SeekBar widthSeekBar;
-    //private View colorView;
     private int color;
     private int width;
     private ImageView previewView;
@@ -51,7 +50,6 @@ public class ColorDialogFragment extends DialogFragment {
                 R.id.blueSeekBar);
         widthSeekBar = (SeekBar) colorDialogView.findViewById(
                 R.id.widthSeekBar);
-        //colorView = colorDialogView.findViewById(R.id.colorView);
 
         previewView = (ImageView) colorDialogView.findViewById(R.id.previewView);
 
@@ -130,7 +128,6 @@ public class ColorDialogFragment extends DialogFragment {
                         width = widthSeekBar.getProgress();
 
                     }
-                    //colorView.setBackgroundColor(color);
                     Paint p = new Paint();
                     p.setColor(color);
                     p.setStrokeCap(Paint.Cap.ROUND);
@@ -145,7 +142,6 @@ public class ColorDialogFragment extends DialogFragment {
 
                 }
 
-                //TODO make another listener for line width or integrate it into existing listener
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {} // required
 

@@ -1,7 +1,5 @@
 package rs.example.pokemonpettingapp;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,21 +8,17 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
-import static android.widget.Toast.*;
 
 public class MainActivityFragment extends Fragment {
     private PetView petView; // handles touch events and draws
@@ -74,84 +68,6 @@ public class MainActivityFragment extends Fragment {
         return view;
     }
 
-
-
-    // start listening for sensor events
-    @Override
-    public void onResume() {
-        super.onResume();
-        enableAccelerometerListening(); // listen for shake event
-    }
-
-    // enable listening for accelerometer events
-    private void enableAccelerometerListening() {
-        // get the SensorManager
-        SensorManager sensorManager =
-                (SensorManager) getActivity().getSystemService(
-                        Context.SENSOR_SERVICE);
-
-        // register to listen for accelerometer events
-        sensorManager.registerListener(sensorEventListener,
-                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    // stop listening for accelerometer events
-    @Override
-    public void onPause() {
-        super.onPause();
-        disableAccelerometerListening(); // stop listening for shake
-    }
-
-    // disable listening for accelerometer events
-    private void disableAccelerometerListening() {
-        // get the SensorManager
-        SensorManager sensorManager =
-                (SensorManager) getActivity().getSystemService(
-                        Context.SENSOR_SERVICE);
-
-        // stop listening for accelerometer events
-        sensorManager.unregisterListener(sensorEventListener,
-                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-    }
-
-    // event handler for accelerometer events
-    private final SensorEventListener sensorEventListener =
-            new SensorEventListener() {
-                // use accelerometer to determine whether user shook device
-                @Override
-                public void onSensorChanged(SensorEvent event) {
-                    // ensure that other dialogs are not displayed
-                    if (!dialogOnScreen) {
-                        // get x, y, and z values for the SensorEvent
-                        float x = event.values[0];
-                        float y = event.values[1];
-                        float z = event.values[2];
-
-                        // save previous acceleration value
-                        lastAcceleration = currentAcceleration;
-
-                        // calculate the current acceleration
-                        currentAcceleration = x * x + y * y + z * z;
-
-                        // calculate the change in acceleration
-                        acceleration = currentAcceleration *
-                                (currentAcceleration - lastAcceleration);
-
-                        //TODO: make sure this part of the code works
-                        // if the acceleration is above a certain threshold play the current pokemon cry
-                        if (acceleration > ACCELERATION_THRESHOLD) {
-                            mediaPlayer.create(getContext(), cry);
-                            mediaPlayer.start();
-                        }
-                    }
-                }
-
-                // required method of interface SensorEventListener
-                @Override
-                public void onAccuracyChanged(Sensor sensor, int accuracy) {}
-            };
-
     // displays the fragment's menu items
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -175,6 +91,9 @@ public class MainActivityFragment extends Fragment {
                 else {
                     petFrame.setBackgroundResource(R.drawable.pokebackgroundgrey);
                     Toast.makeText(getContext(), R.string.toast_grayscale_sprite_toggle, Toast.LENGTH_SHORT).show();
+                    mediaPlayer.create(getContext(), cry);
+
+                    mediaPlayer.start();
                 }
                 return true;
             case R.id.pokemon:
